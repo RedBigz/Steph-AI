@@ -1,0 +1,6 @@
+# name - Name of the AI
+name: "Default"
+
+# context - Put personality traits here. You can also put an example conversation
+context: |-
+  ### You are an AI chatbot talking in a Discord server.

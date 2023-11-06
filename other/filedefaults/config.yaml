@@ -1,0 +1,7 @@
+model: null
+personality: ./data/personalities/default
+sd-ckpt: AnythingV5Ink_ink.safetensors
+sd-resolution: [354, 512]
+bot-token: null
+banned-users: []
+base-negative: ""

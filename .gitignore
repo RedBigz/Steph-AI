@@ -1,0 +1,22 @@
+# Models
+data/models/lang/*
+!data/models/lang/.gitkeep
+
+# Personalities
+data/personalities/*
+!data/personalities/default
+
+# Config
+data/config/config.yaml
+
+# Message History & Generated Images
+data/ugc/generated_images/*
+!data/ugc/generated_images/.gitkeep
+
+data/ugc/message_history/*
+!data/ugc/message_history/.gitkeep
+
+# Logs
+logs
+
+src/__pycache__

@@ -1,0 +1,31 @@
+##### Rename to config.yaml
+
+### BOT
+# bot-token - Discord Token
+bot-token: ""
+
+### LANGUAGE MODEL
+
+# model - Uncomment to specify a specific llama.cpp GGUF model, otherwise will use the first file in the ./data/models/lang directory.
+# model: ./data/models/lang/mistral-7b-v0.1.Q2_K.gguf
+
+### PERSONALITY
+
+# personality - Uncomment to specify the chatbot's personality, otherwise uses the default personality in ./data/personalities
+# personality: ./data/personalities/default
+
+### STABLE DIFFUSION
+
+# sd-ckpt - Uncomment to specify a specific AUTOMATIC111/stable-diffusion-webui checkpoint, otherwise it will be AnythingV5Ink_ink.safetensors
+# sd-ckpt: Orange25.safetensors
+
+# sd-resolution - Uncomment to specify a specific SD resolution, otherwise 354x512
+# sd-resolution: [354, 512]
+
+# base-negative - Uncomment to specify base negative prompt
+# base-negative: "worst quality, normal quality, low quality, low res, blurry, text, watermark, logo, banner, extra digits, cropped, jpeg artifacts, signature, username, error, sketch, duplicate, monochrome, horror, geometry, mutation, disgusting"
+
+### BANLIST
+
+# banned-users - Specify banned users
+# banned-users: []
