@@ -12,4 +12,4 @@ class Personality:
         # Parse Image Prompts
         self.character_prompt: str = yamlfile.get_attr(self.path_image, "character-prompt")
         self.character_negative_prompt: str = yamlfile.get_attr(self.path_image, "character-negative-prompt")
-        self.ai_intensity: float = yamlfile.get_attr(self.path_image, "ai-intensity")
+        # self.ai_intensity: float = yamlfile.get_attr(self.path_image, "ai-intensity")
