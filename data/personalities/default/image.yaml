@@ -1,6 +1,3 @@
 # character-prompt & character-negative-prompt - Prompt for character
 character-prompt: "20-year-old man, brown hair, circular glasses"
 character-negative-prompt: ""
-
-# ai-intensity - Intensity of the AI's prompt (default: 1.21)
-# ai-intensity: 1.21

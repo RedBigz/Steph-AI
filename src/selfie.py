@@ -5,7 +5,7 @@ def should_take_selfie(msg):
     s = msg # retrofitting
     return bool(sum([k + " " in s.lower() for k in "take|post|paint|generate|make|draw|create|show|give|snap|capture|send|display|share|shoot|see|provide".split("|")])) and bool(sum([k in s.lower() for k in "image|picture|screenshot|screenie|painting|pic|photo|photograph|portrait|selfie|your".split("|")]))
 
-def img_prompt(user, ai, ppt): # retrofitting
+def img_prompt(user, ai, ppt, aii): # retrofitting
     date, time = timedata.current_time()
 
     prompt = ""
@@ -40,7 +40,7 @@ def img_prompt(user, ai, ppt): # retrofitting
     prompt += format_string
 
     if len(ai) > 0:
-        prompt += f" (({ai}))"
+        prompt += f" ({ai}:{aii})"
 
     prompt += f", ({time.lower()}:2)"
     
@@ -48,11 +48,11 @@ def img_prompt(user, ai, ppt): # retrofitting
 
     return prompt, selfie
 
-async def take_selfie(msg, ai, ppt, bngp, ngp, ckpt):
+async def take_selfie(msg, ai, ppt, bngp, ngp, ckpt, aii):
     prompt, selfie = img_prompt(msg, ai, ppt)
     
     neg = ""
     if len(bngp) > 0: neg += bngp + ", "
     if selfie: neg += ngp
 
-    return await webui.txt2img(prompt, neg, ckpt)
+    return await webui.txt2img(prompt, neg, ckpt, aii)

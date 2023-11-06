@@ -132,7 +132,7 @@ class Bot(discord.Client):
             s = msg.content # retrofitting
             tags = (await aio.get_event_loop().run_in_executor(None, partial(self.llama.__call__, f"### Maintain accuracy to the user's prompt. Do not alter the user request. You may use semantic tags to describe the image. Try to not be sexual unless requested.\n### User Request: {s}\n### Description of the requested image:", top_p=0.1, max_tokens=128, stop=STOP, temperature=0.8, repeat_penalty=1.5)))["choices"][0]["text"].strip()
             logging.info(f"AI Prompt: {tags}")
-            file = discord.File(await take_selfie(msg.content, tags, self.llama.personality.character_prompt, get_config("base-negative"), self.llama.personality.character_negative_prompt, get_config("sd-ckpt")), "stable_diffusion.png")
+            file = discord.File(await take_selfie(msg.content, tags, self.llama.personality.character_prompt, get_config("base-negative"), self.llama.personality.character_negative_prompt, get_config("sd-ckpt"), 1.21), "stable_diffusion.png")
             summary = (await aio.get_event_loop().run_in_executor(None, partial(self.llama.__call__, f"### Summarise the following prompt into semantic tags. Do NOT use hashtags.\n### Prompt: {tags}\n### Summarised tags:", top_p=0.1, max_tokens=128, stop=STOP + ["()"], temperature=0.8, repeat_penalty=1.25)))["choices"][0]["text"].strip()
             logging.info(f"Summary: {summary}")
             self.llama.chat_history.append([self.llama.personality.name, f"Photo: {summary}"])
