@@ -49,10 +49,10 @@ def img_prompt(user, ai, ppt, aii): # retrofitting
     return prompt, selfie
 
 async def take_selfie(msg, ai, ppt, bngp, ngp, ckpt, aii):
-    prompt, selfie = img_prompt(msg, ai, ppt)
+    prompt, selfie = img_prompt(msg, ai, ppt, aii)
     
     neg = ""
     if len(bngp) > 0: neg += bngp + ", "
     if selfie: neg += ngp
 
-    return await webui.txt2img(prompt, neg, ckpt, aii)
+    return await webui.txt2img(prompt, neg, ckpt)
