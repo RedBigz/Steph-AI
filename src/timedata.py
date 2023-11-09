@@ -16,10 +16,10 @@ def current_time():
     hour = lt.tm_hour - 1 # -1 for japan reasons
 
     lang = ""
-    if hour >= 5 and hour < 12: lang = "Morning time"
-    elif hour >= 12 and hour < 17: lang = "Afternoon time"
-    elif hour >= 17 and hour < 20: lang = "Evening time, sunset"
-    else: lang = "Night time"
+    if hour >= 5 and hour < 12: lang = "morning"
+    elif hour >= 12 and hour < 17: lang = "afternooon"
+    elif hour >= 17 and hour < 20: lang = "sunset"
+    else: lang = "night"
 
     return f"{hour}:{lt.tm_min} on the {lt.tm_mday}{unit(lt.tm_mday)} of {months[lt.tm_mon]} {lt.tm_year}", lang
 

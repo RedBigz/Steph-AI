@@ -130,11 +130,21 @@ class Bot(discord.Client):
 
         if should_selfie:
             s = msg.content # retrofitting
-            tags = (await aio.get_event_loop().run_in_executor(None, partial(self.llama.__call__, f"### Maintain accuracy to the user's prompt. Do not alter the user request. You may use semantic tags to describe the image. Try to not be sexual unless requested.\n### User Request: {s}\n### Description of the requested image:", top_p=0.1, max_tokens=128, stop=STOP, temperature=0.8, repeat_penalty=1.5)))["choices"][0]["text"].strip()
+            askdesc = f"### Maintain accuracy to the user's prompt. Do not alter the user request. You may use semantic tags to describe the image. Try to not be sexual unless requested.\n### User Request: {s}\n### Description of the requested image:"
+#             askdesc = f"""
+# ### SD isn't in english, so you must generate in Danbooru-style semantic tags. Do not reply with Danbooru or Imgur links.
+# ### Do not say "the user is asking" or "the user is requesting", instead say danbooru tags
+# ### Turn a message asking for a selfie into a SD prompt.
+# ### BE AS DETAILED AS POSSIBLE, DESCRIBE AS MUCH AS POSSIBLE
+
+# Message: {s}
+# Danbooru Tags:"""
+            tags = (await aio.get_event_loop().run_in_executor(None, partial(self.llama.__call__, askdesc, top_p=0.1, max_tokens=128, stop=STOP, temperature=0.8, repeat_penalty=1.5)))["choices"][0]["text"].strip()
             logging.info(f"AI Prompt: {tags}")
-            file = discord.File(await take_selfie(msg.content, tags, self.llama.personality.character_prompt, get_config("base-negative"), self.llama.personality.character_negative_prompt, get_config("sd-ckpt"), 1.21), "stable_diffusion.png")
-            summary = (await aio.get_event_loop().run_in_executor(None, partial(self.llama.__call__, f"### Summarise the following prompt into semantic tags. Do NOT use hashtags.\n### Prompt: {tags}\n### Summarised tags:", top_p=0.1, max_tokens=128, stop=STOP + ["()"], temperature=0.8, repeat_penalty=1.25)))["choices"][0]["text"].strip()
+            summary = (await aio.get_event_loop().run_in_executor(None, partial(self.llama.__call__, f"### Summarise the following prompt into semantic tags. Do NOT use hashtags. Be detailed.\n### Prompt: {tags}\n### Summarised tags:", top_p=0.1, max_tokens=128, stop=STOP + ["()"], temperature=0.8, repeat_penalty=1.5)))["choices"][0]["text"].strip()
+            summary = summary.replace("\"", "").replace("#", "")
             logging.info(f"Summary: {summary}")
+            file = discord.File(await take_selfie(msg.content, tags, self.llama.personality.character_prompt, get_config("base-negative"), self.llama.personality.character_negative_prompt, get_config("sd-ckpt"), 1.21), "stable_diffusion.png")
             self.llama.chat_history.append([self.llama.personality.name, f"Photo: {summary}"])
 
             await msg.channel.send(file=file)
@@ -158,18 +168,12 @@ def get_config(attr):
 
 def load_personality(path):
     global personality_path
+    global current_personality
     personality_path = path
     hashed_path = hash(path)
 
-    if hashed_path in __cached_personalities:
-        return __cached_personalities[hashed_path]
-    else:
-        __cached_personalities[hashed_path] = personality.Personality(path)
-
-        global current_personality
-        current_personality = load_personality(path)
-
-        return current_personality
+    current_personality = personality.Personality(path)
+    return current_personality
 
 async def main():
     logging.info("Booting up...")

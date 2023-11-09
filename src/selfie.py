@@ -35,14 +35,14 @@ def img_prompt(user, ai, ppt, aii): # retrofitting
     if " of you with " in user:
         format_string += "she is with"
     if "holding" in user:
-        format_string += ", holding"
+        format_string += "holding"
     
     prompt += format_string
 
     if len(ai) > 0:
         prompt += f" ({ai}:{aii})"
 
-    prompt += f", ({time.lower()}:2)"
+    prompt += f", ({time.lower()})"
     
     prompt = prompt.strip()
 
@@ -55,4 +55,4 @@ async def take_selfie(msg, ai, ppt, bngp, ngp, ckpt, aii):
     if len(bngp) > 0: neg += bngp + ", "
     if selfie: neg += ngp
 
-    return await webui.txt2img(prompt, neg, ckpt)
+    return await webui.txt2img(prompt, neg, ckpt, landscape = "landscape" in msg)

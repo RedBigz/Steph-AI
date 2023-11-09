@@ -6,7 +6,9 @@ def cache_file(file):
     hashed_path = hash(file)
 
     if hashed_path in __cached_files:
-        return __cached_files[hashed_path]
+        f = __cached_files[hashed_path]
+        del __cached_files[hashed_path]
+        return f
     else:
         with open(file, "r") as fobj:
             __cached_files[hashed_path] = yaml.safe_load(fobj)

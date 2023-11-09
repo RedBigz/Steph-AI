@@ -11,7 +11,7 @@ emoji_pattern = re.compile("["
         u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
                            "]+", flags=re.UNICODE)
 
-async def txt2img(prompt: str, negative_prompt, ckpt, seed=-1, sampler="DPM++ 2M Karras", steps=20):
+async def txt2img(prompt: str, negative_prompt, ckpt, seed=-1, sampler="DPM++ 2M Karras", steps=20, landscape = False):
     prompt = emoji_pattern.sub(r"", prompt)
     async with ClientSession() as cs:
         async with cs.post("http://127.0.0.1:7860/sdapi/v1/txt2img", json={
@@ -20,8 +20,8 @@ async def txt2img(prompt: str, negative_prompt, ckpt, seed=-1, sampler="DPM++ 2M
             "seed": seed,
             "sampler_index": sampler,
             "steps": steps,
-            "width": 354,
-            "height": 512,
+            "width": 512 if landscape else 288,
+            "height": 288 if landscape else 512,
             "override_settings": {"sd_model_checkpoint": ckpt}, # AOM3A1B_orangemixs.safetensors
             "override_settings_restore_afterwards": False,
         }) as resp:
