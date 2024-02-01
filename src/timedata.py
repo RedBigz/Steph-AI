@@ -21,7 +21,7 @@ def current_time():
     elif hour >= 17 and hour < 20: lang = "sunset"
     else: lang = "night"
 
-    return f"{hour}:{lt.tm_min} on the {lt.tm_mday}{unit(lt.tm_mday)} of {months[lt.tm_mon]} {lt.tm_year}", lang
+    return f"{hour}:{lt.tm_min} on the {lt.tm_mday}{unit(lt.tm_mday)} of {months[lt.tm_mon - 1]} {lt.tm_year}", lang
 
 def season():
     doy = datetime.datetime.now().timetuple().tm_yday
